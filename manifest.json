@@ -1,0 +1,95 @@
+{
+  "manifest_version": 3,
+  "name": "NexusScan - Advanced URL Security Scanner",
+  "version": "1.0.0",
+  "description": "NexusScan: Advanced URL security scanner with VirusTotal and urlscan.io integration. Scan Smarter. Stay Safer.",
+  
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "nexusscan@security.scanner"
+    }
+  },
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "bookmarks",
+    "declarativeNetRequest",
+    "contextMenus",
+    "notifications"
+  ],
+  
+  "host_permissions": [
+    "https://www.virustotal.com/*",
+    "https://urlscan.io/*",
+    "*://*/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "NexusScan - Scan Smarter. Stay Safer",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  
+  "options_page": "options.html",
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "nexusscan_ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  
+  "commands": {
+    "scan-current-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Quick scan current page with NexusScan"
+    },
+    "toggle-protection": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Toggle NexusScan real-time protection"
+    }
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
